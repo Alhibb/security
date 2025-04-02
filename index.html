@@ -8,20 +8,19 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --bg: #ffffff;
-      --surface: #f8fafa;
-      --surface-hover: #f0f7f5;
-      --primary: #10b981;
-      --primary-dark: #059669;
-      --primary-light: #d1fae5;
-      --primary-ultra-light: #ecfdf5;
-      --text: #1f2937;
-      --text-muted: #6b7280;
-      --warning: #ef4444;
-      --gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --bg-dark: #0a0a0a;
+      --bg-card: #111111;
+      --green-primary: #2ecc71;
+      --green-bright: #39ff14;
+      --green-dark: #27ae60;
+      --green-glow: rgba(46, 204, 113, 0.3);
+      --text-light: #f5f5f5;
+      --text-muted: #a0a0a0;
+      --text-dark: #333333;
+      --warning: #ff5f58;
       --transition-speed: 0.3s;
-      --shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
-      --border-radius: 16px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      --border-radius: 8px;
     }
     
     * {
@@ -32,14 +31,14 @@
     
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      background: var(--bg-dark);
+      color: var(--text-light);
       line-height: 1.7;
       overflow-x: hidden;
     }
     
     .container {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 2rem;
     }
@@ -50,31 +49,34 @@
       top: 0;
       left: 0;
       right: 0;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(10, 10, 10, 0.8);
       backdrop-filter: blur(10px);
       z-index: 100;
-      padding: 1rem 0;
+      padding: 0.75rem 0;
       transition: all var(--transition-speed);
-      border-bottom: 1px solid var(--primary-ultra-light);
+      border-bottom: 1px solid rgba(46, 204, 113, 0.2);
     }
     
     .header-scrolled {
-      box-shadow: 0 5px 20px rgba(16, 185, 129, 0.1);
+      box-shadow: 0 5px 20px rgba(46, 204, 113, 0.1);
     }
     
     .header-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
     }
     
     .logo {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.5rem;
       font-weight: 700;
       font-size: 1.25rem;
-      color: var(--primary);
+      color: var(--green-primary);
       transition: transform 0.3s ease;
     }
     
@@ -82,64 +84,67 @@
       transform: scale(1.05);
     }
     
-    .logo span {
-      position: relative;
-      overflow: hidden;
+    .logo-emoji {
+      font-size: 1.5rem;
     }
     
-    .logo span::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--primary);
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
     }
     
-    .logo:hover span::after {
-      transform: translateX(0);
+    .nav-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+      color: var(--green-primary);
     }
     
     .hero {
-      background: var(--gradient);
-      padding: 10rem 2rem 8rem;
-      clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+      background: var(--bg-dark);
+      padding: 10rem 2rem 6rem;
       position: relative;
       margin-bottom: 4rem;
-      color: white;
+      overflow: hidden;
+    }
+    
+    .hero-waves {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.3;
+      background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='pattern' width='100' height='100' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 0,10 C 30,10 30,30 60,30 90,30 90,10 120,10 v80 h-120z' stroke='%232ecc71' fill='none' stroke-width='0.5'/%3E%3Cpath d='M 0,40 C 30,40 30,60 60,60 90,60 90,40 120,40 v80 h-120z' stroke='%232ecc71' fill='none' stroke-width='0.5'/%3E%3Cpath d='M 0,70 C 30,70 30,90 60,90 90,90 90,70 120,70 v80 h-120z' stroke='%232ecc71' fill='none' stroke-width='0.5'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23pattern)'/%3E%3C/svg%3E");
+      animation: waveMove 20s linear infinite;
+    }
+    
+    @keyframes waveMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 0; }
     }
     
     .hero-content {
+      position: relative;
+      z-index: 1;
       max-width: 800px;
-    }
-    
-    .hero h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      margin-bottom: 1.5rem;
-      line-height: 1.2;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: slideUpFade 0.6s ease forwards 0.3s;
-    }
-    
-    .hero p {
-      font-size: 1.2rem;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: slideUpFade 0.6s ease forwards 0.5s;
     }
     
     .hero-badge {
       display: inline-flex;
       align-items: center;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(46, 204, 113, 0.1);
+      border: 1px solid rgba(46, 204, 113, 0.3);
       padding: 0.5rem 1rem;
       border-radius: 50px;
       margin-bottom: 1.5rem;
       font-weight: 500;
+      color: var(--green-primary);
       opacity: 0;
       transform: translateY(30px);
       animation: slideUpFade 0.6s ease forwards 0.1s;
@@ -147,6 +152,26 @@
     
     .hero-badge i {
       margin-right: 0.5rem;
+    }
+    
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+      background: linear-gradient(to right, var(--text-light), var(--green-primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUpFade 0.6s ease forwards 0.3s;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUpFade 0.6s ease forwards 0.5s;
     }
     
     /* Grid layout for cards */
@@ -161,12 +186,11 @@
     
     /* Card Styles */
     .card {
-      background: var(--surface);
+      background: var(--bg-card);
       padding: 2.5rem;
       border-radius: var(--border-radius);
-      border: 1px solid var(--primary-ultra-light);
+      border: 1px solid rgba(46, 204, 113, 0.2);
       transition: transform var(--transition-speed), 
-                  background-color var(--transition-speed),
                   box-shadow var(--transition-speed);
       box-shadow: var(--shadow);
       position: relative;
@@ -177,9 +201,9 @@
     }
     
     .card:hover {
-      transform: translateY(-5px) scale(1.02);
-      background: var(--surface-hover);
-      box-shadow: 0 15px 40px rgba(16, 185, 129, 0.15);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(46, 204, 113, 0.15);
+      border-color: var(--green-primary);
     }
     
     .card::before {
@@ -189,7 +213,7 @@
       left: 0;
       width: 4px;
       height: 0;
-      background: var(--primary);
+      background: var(--green-primary);
       transition: height 0.5s ease;
     }
     
@@ -204,7 +228,7 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: rgba(16, 185, 129, 0.05);
+      background: rgba(46, 204, 113, 0.05);
       transform: skewX(-20deg);
       transition: left 0.5s;
     }
@@ -215,20 +239,22 @@
     
     .icon-xl {
       font-size: 3rem;
-      color: var(--primary);
+      color: var(--green-primary);
       margin-bottom: 1.5rem;
-      filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.3));
+      filter: drop-shadow(0 0 10px var(--green-glow));
       transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     
     .card:hover .icon-xl {
       transform: scale(1.2) rotate(10deg);
+      color: var(--green-bright);
     }
     
     .card h2 {
       margin-bottom: 1.5rem;
       position: relative;
       display: inline-block;
+      color: var(--green-primary);
       transition: transform 0.3s ease;
     }
     
@@ -242,8 +268,8 @@
       left: 0;
       bottom: -5px;
       width: 40px;
-      height: 3px;
-      background: var(--primary);
+      height: 2px;
+      background: var(--green-primary);
       transition: width var(--transition-speed);
     }
     
@@ -253,7 +279,7 @@
     
     .card h3 {
       margin-bottom: 1rem;
-      color: var(--primary);
+      color: var(--green-primary);
       transition: transform 0.3s ease;
     }
     
@@ -275,7 +301,7 @@
     
     .threat-list li:hover {
       transform: translateX(10px);
-      color: var(--primary);
+      color: var(--green-primary);
     }
     
     .threat-list li::before {
@@ -297,10 +323,11 @@
       display: grid;
       gap: 1.5rem;
       padding: 2rem;
-      background: rgba(239, 68, 68, 0.05);
+      background: rgba(0, 0, 0, 0.3);
       border-radius: var(--border-radius);
       border-left: 4px solid var(--warning);
       font-family: 'JetBrains Mono', monospace;
+      color: var(--text-light);
     }
     
     .attack-flow div {
@@ -313,7 +340,7 @@
     .attack-flow div:hover {
       transform: translateX(15px);
       opacity: 1;
-      color: var(--primary-dark);
+      color: var(--green-primary);
     }
     
     .attack-flow div::before {
@@ -332,7 +359,7 @@
     .protocol-table {
       width: 100%;
       border-collapse: collapse;
-      background: var(--surface);
+      background: var(--bg-card);
       border-radius: var(--border-radius);
       overflow: hidden;
       margin-top: 1.5rem;
@@ -342,14 +369,14 @@
     .protocol-table th,
     .protocol-table td {
       padding: 1.2rem;
-      border-bottom: 1px solid var(--primary-ultra-light);
+      border-bottom: 1px solid rgba(46, 204, 113, 0.2);
       text-align: left;
       transition: all var(--transition-speed);
     }
     
     .protocol-table th {
-      background: var(--primary-ultra-light);
-      color: var(--primary-dark);
+      background: rgba(46, 204, 113, 0.1);
+      color: var(--green-primary);
       font-weight: 600;
     }
     
@@ -362,7 +389,7 @@
     }
     
     .protocol-table tr:hover td {
-      background: var(--primary-ultra-light);
+      background: rgba(46, 204, 113, 0.05);
     }
     
     .protocol-table tr:last-child td {
@@ -371,21 +398,23 @@
     
     /* Code Block Styling */
     pre {
-      background: var(--primary-ultra-light);
+      background: #111111;
       padding: 2rem;
       border-radius: var(--border-radius);
       margin: 2rem 0;
       overflow-x: auto;
       font-family: 'JetBrains Mono', monospace;
-      border: 1px solid var(--primary-light);
+      border: 1px solid rgba(46, 204, 113, 0.2);
       position: relative;
-      color: var(--text);
+      color: var(--text-light);
       transition: transform 0.3s ease;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
     }
     
     pre:hover {
       transform: translateY(-5px);
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow), inset 0 0 20px rgba(0, 0, 0, 0.5);
+      border-color: var(--green-primary);
     }
     
     pre::before {
@@ -394,23 +423,89 @@
       top: 0;
       right: 0;
       background: var(--warning);
-      color: white;
+      color: var(--text-dark);
       padding: 0.25rem 1rem;
       font-size: 0.8rem;
       border-bottom-left-radius: var(--border-radius);
       font-weight: 600;
     }
     
+    /* Terminal styling */
+    .terminal {
+      background: #111111;
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-light);
+      border: 1px solid rgba(46, 204, 113, 0.2);
+      margin: 2rem 0;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .terminal-dots {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .terminal-dot.red { background: #ff5f58; }
+    .terminal-dot.yellow { background: #ffbd2e; }
+    .terminal-dot.green { background: #28ca42; }
+    
+    .terminal-title {
+      margin-left: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    
+    .terminal-content {
+      padding: 0.5rem;
+      line-height: 1.5;
+    }
+    
+    .terminal-line {
+      display: flex;
+      margin-bottom: 0.5rem;
+    }
+    
+    .terminal-prompt {
+      color: var(--green-primary);
+      margin-right: 0.5rem;
+    }
+    
+    .terminal-command {
+      color: var(--text-light);
+    }
+    
+    .terminal-output {
+      color: var(--text-muted);
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
     /* AgentiPy Integration Card with a distinct gradient background */
     .integration-card {
-      background: var(--gradient);
+      background: linear-gradient(135deg, rgba(46, 204, 113, 0.1) 0%, rgba(39, 174, 96, 0.2) 100%);
       padding: 3rem;
-      color: white;
+      border: 1px solid var(--green-primary);
     }
     
     .integration-card h2,
     .integration-card h3 {
-      color: white;
+      color: var(--green-primary);
     }
     
     .integration-card .threat-list li::before {
@@ -418,13 +513,13 @@
     }
     
     .integration-card .icon-xl {
-      color: white;
-      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+      color: var(--green-primary);
+      filter: drop-shadow(0 0 10px var(--green-glow));
     }
     
     .integration-card .threat-list li:hover {
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
+      color: var(--green-bright);
+      background: rgba(46, 204, 113, 0.1);
       padding: 0.5rem 1rem 0.5rem 2.5rem;
       border-radius: 8px;
       margin-left: -0.5rem;
@@ -440,7 +535,7 @@
     
     /* Alert component */
     .alert {
-      background: rgba(239, 68, 68, 0.05);
+      background: rgba(255, 95, 88, 0.1);
       border-left: 4px solid var(--warning);
       padding: 1.5rem;
       border-radius: var(--border-radius);
@@ -474,8 +569,8 @@
       right: 2rem;
       width: 50px;
       height: 50px;
-      background: var(--primary);
-      color: white;
+      background: var(--green-primary);
+      color: var(--text-dark);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -484,7 +579,7 @@
       opacity: 0;
       visibility: hidden;
       transition: all var(--transition-speed);
-      box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+      box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
       z-index: 99;
     }
     
@@ -495,16 +590,16 @@
     
     .back-to-top:hover {
       transform: translateY(-5px) scale(1.1);
-      background: var(--primary-dark);
+      background: var(--green-bright);
     }
     
     /* Blog post styling */
     .blog-post {
-      background: var(--surface);
+      background: var(--bg-card);
       border-radius: var(--border-radius);
       padding: 3rem;
       box-shadow: var(--shadow);
-      border: 1px solid var(--primary-ultra-light);
+      border: 1px solid rgba(46, 204, 113, 0.2);
       margin-bottom: 4rem;
     }
     
@@ -513,7 +608,7 @@
     }
     
     .blog-post h2 {
-      color: var(--primary-dark);
+      color: var(--green-primary);
       margin-bottom: 1.5rem;
       position: relative;
       display: inline-block;
@@ -525,13 +620,41 @@
       left: 0;
       bottom: -5px;
       width: 60px;
-      height: 3px;
-      background: var(--primary);
+      height: 2px;
+      background: var(--green-primary);
     }
     
     .blog-post h3 {
-      color: var(--primary);
+      color: var(--green-primary);
       margin: 2rem 0 1rem;
+    }
+    
+    /* Button styling */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.25rem;
+      background: rgba(46, 204, 113, 0.1);
+      color: var(--green-primary);
+      border: 1px solid rgba(46, 204, 113, 0.3);
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+      background: var(--green-primary);
+      color: var(--text-dark);
+      transform: translateY(-2px);
+    }
+    
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      margin: 2rem 0;
     }
     
     /* Responsive adjustments */
@@ -559,6 +682,10 @@
       
       .blog-post {
         padding: 2rem;
+      }
+      
+      .nav-links {
+        display: none;
       }
     }
     
@@ -594,6 +721,12 @@
       100% { transform: translateX(0); }
     }
     
+    @keyframes glow {
+      0% { filter: drop-shadow(0 0 5px var(--green-glow)); }
+      50% { filter: drop-shadow(0 0 20px var(--green-glow)); }
+      100% { filter: drop-shadow(0 0 5px var(--green-glow)); }
+    }
+    
     /* Animation delays for sections */
     section:nth-child(1) { animation-delay: 0.8s; }
     section:nth-child(2) { animation-delay: 1.0s; }
@@ -617,29 +750,48 @@
     .motion-shake {
       animation: shake 0.5s;
     }
+    
+    .motion-glow {
+      animation: glow 3s infinite;
+    }
   </style>
 </head>
 <body>
   <header class="header" id="header">
-    <div class="container header-container">
+    <div class="header-container">
       <div class="logo">
-        <span class="motion-float">🐍</span>
-        <span>AgentiPy Security</span>
+        <span class="logo-emoji motion-float">🐍</span>
+        <span>AgentiPy</span>
       </div>
-      <div class="header-actions">
-        <!-- Empty div to maintain flex spacing -->
+      <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Documentation</a>
+        <a href="#">Security</a>
+        <a href="#">GitHub</a>
       </div>
     </div>
   </header>
 
   <section class="hero">
+    <div class="hero-waves"></div>
     <div class="container hero-content">
       <div class="hero-badge">
         <i class="fas fa-exclamation-triangle"></i>
         <span>Security Alert</span>
       </div>
       <h1>File Conversion Risks & Wallet Security</h1>
-      <p>AgentiPy Devrel Team • Updated April 2025</p>
+      <p>AgentiPy DevRel Team • Updated April 2025</p>
+      
+      <div class="btn-group">
+        <a href="#details" class="btn">
+          <i class="fas fa-shield-alt"></i>
+          <span>Read Details</span>
+        </a>
+        <a href="#recommendations" class="btn">
+          <i class="fas fa-check-circle"></i>
+          <span>View Recommendations</span>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -673,7 +825,7 @@
     </section>
     
     <!-- Blog Post Details -->
-    <section>
+    <section id="details">
       <article class="blog-post">
         <h2>New File Conversion Hack Alert</h2>
         
@@ -689,6 +841,34 @@
         <p>This method, which has become popular among hackers, involves misusing free file conversion sites. Innocent-looking tools like "Convert to PDF", "Merge JPG", or "Download MP3" can actually steal data or spread malware.</p>
         
         <p>Attackers set up fake or compromised file conversion sites offering services such as converting .doc to .pdf, .jpg to .pdf, and MP3/MP4 download. When you upload or download a file, JavaScript can extract data from your browser in the background or inject malicious code into the converted file.</p>
+        
+        <div class="terminal">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <div class="terminal-dot red"></div>
+              <div class="terminal-dot yellow"></div>
+              <div class="terminal-dot green"></div>
+            </div>
+            <div class="terminal-title">wallet-scanner.js</div>
+          </div>
+          <div class="terminal-content">
+            <div class="terminal-line">
+              <span class="terminal-prompt">$</span>
+              <span class="terminal-command">node detect-wallets.js</span>
+            </div>
+            <div class="terminal-output">
+              Scanning browser environment...
+              Found wallet extensions: MetaMask, Phantom, TrustWallet
+              Extracting wallet data...
+              Preparing payload for exfiltration...
+              Connecting to C2 server: malicious-domain.xyz
+            </div>
+            <div class="terminal-line">
+              <span class="terminal-prompt">$</span>
+              <span class="terminal-command">_</span>
+            </div>
+          </div>
+        </div>
         
         <p>Technical example: A PDF file you download may contain JavaScript or macros that, when activated, extract data, open backdoors, or download ransomware. These attacks typically operate on a "File Dropper" + "Loader" principle.</p>
         
@@ -748,25 +928,13 @@ PDF.openAction = function() {
             <td>Complete wallet compromise</td>
           </tr>
         </table>
-        
-        <h3>Recommendations:</h3>
-        <ul class="threat-list">
-          <li>Only use trusted, well-known file conversion services.</li>
-          <li>Scan downloaded files with antivirus before opening.</li>
-          <li>Avoid opening automatically downloaded files.</li>
-          <li>Be cautious of suspicious domain names, lack of HTTPS, excessive ads, and non-functional services.</li>
-          <li>Consider using offline software for file conversions when possible.</li>
-          <li>Keep your operating system and browsers updated with the latest security patches.</li>
-        </ul>
-        
-        <p>Keep in mind that some sites might collect credit card data, steal session cookies, track your IP, or target crypto wallets. Not every "free" tool works in your best interest.</p>
       </article>
     </section>
     
     <!-- Security Protocol -->
-    <section>
+    <section id="recommendations">
       <article class="card">
-        <i class="fas fa-shield-alt icon-xl motion-float"></i>
+        <i class="fas fa-shield-alt icon-xl motion-glow"></i>
         <h2>Security Recommendations</h2>
         <div class="risk-grid" style="margin-top: 2rem;">
           <div>
@@ -796,7 +964,7 @@ PDF.openAction = function() {
     <!-- AgentiPy Integration -->
     <section>
       <article class="card integration-card motion-pulse">
-        <i class="fas fa-robot icon-xl"></i>
+        <i class="fas fa-robot icon-xl motion-glow"></i>
         <h2>AgentiPy Protection Layer</h2>
         <div class="risk-grid" style="margin-top: 2rem;">
           <div>
@@ -891,25 +1059,10 @@ PDF.openAction = function() {
         });
       });
       
-      // Add parallax effect to hero section
-      const hero = document.querySelector('.hero');
-      window.addEventListener('scroll', () => {
-        const scrollPosition = window.scrollY;
-        if (scrollPosition < 600) {
-          hero.style.backgroundPosition = `center ${scrollPosition * 0.5}px`;
-        }
-      });
-      
       // Add motion to attack flow items
       const attackFlowItems = document.querySelectorAll('.attack-flow div');
       attackFlowItems.forEach((item, index) => {
         item.style.animationDelay = `${index * 0.2}s`;
-        item.addEventListener('mouseenter', () => {
-          const icon = item.querySelector('::before');
-          if (icon) {
-            icon.style.color = 'var(--primary)';
-          }
-        });
       });
       
       // Add floating effect to cards on hover
@@ -928,30 +1081,21 @@ PDF.openAction = function() {
         });
       });
       
-      // Add ripple effect on click
-      function createRipple(event) {
-        const button = event.currentTarget;
-        
-        const circle = document.createElement('span');
-        const diameter = Math.max(button.clientWidth, button.clientHeight);
-        
-        circle.style.width = circle.style.height = `${diameter}px`;
-        circle.style.left = `${event.clientX - button.getBoundingClientRect().left - diameter / 2}px`;
-        circle.style.top = `${event.clientY - button.getBoundingClientRect().top - diameter / 2}px`;
-        circle.classList.add('ripple');
-        
-        const ripple = button.querySelector('.ripple');
-        if (ripple) {
-          ripple.remove();
-        }
-        
-        button.appendChild(circle);
-      }
-      
-      // Add ripple to interactive elements
-      const buttons = document.querySelectorAll('.logo, .back-to-top');
-      buttons.forEach(button => {
-        button.addEventListener('click', createRipple);
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 100,
+              behavior: 'smooth'
+            });
+          }
+        });
       });
     });
   </script>
